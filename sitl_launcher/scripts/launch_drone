@@ -183,7 +183,8 @@ class Drone:
             'camera_udp_port': 5600 + int(vehicle_id),
         }
 
-        self.xml = subprocess.check_output(valid_models[drone_type] % self.arguments, shell=True).decode('utf-8')
+        f = open('/home/malintha/.gazebo/models/iris/iris.sdf','r')
+        self.xml = f.read()
 
     def spawn(self):
         spawn_model(self.vehicle_name, self.xml, self.pose)
@@ -294,29 +295,30 @@ def main():
     print("myargv", myargv)
     args = parser.parse_args(args=myargv)
 
-    overlap = set(args.iris) & set(args.plane)
-    if overlap:
-        parser.error("iris and plane poses cannot overlap %s" % overlap)
-    overlap = set(args.iris) & set(args.typhoon)
-    if overlap:
-        parser.error("iris and typhoon poses cannot overlap %s" % overlap)
-    overlap = set(args.typhoon) & set(args.plane)
-    if overlap:
-        parser.error("typhoon and plane poses cannot overlap %s" % overlap)
+    # overlap = set(args.iris) & set(args.plane)
+    # if overlap:
+    #     parser.error("iris and plane poses cannot overlap %s" % overlap)
+    # overlap = set(args.iris) & set(args.typhoon)
+    # if overlap:
+    #     parser.error("iris and typhoon poses cannot overlap %s" % overlap)
+    # overlap = set(args.typhoon) & set(args.plane)
+    # if overlap:
+    #     parser.error("typhoon and plane poses cannot overlap %s" % overlap)
 
     drones = {}
-    if not (args.iris + args.plane + args.typhoon):
-        ds = DroneSelector()
-        ds.mainloop()
-        drones = ds.drones
-        print("DRONES is", drones)
+    # if not (args.iris + args.plane + args.typhoon):
+    #     ds = DroneSelector()
+    #     ds.mainloop()
+    #     drones = ds.drones
+        # print("DRONES is", drones)
+    id = '0'
 
-    for id in args.iris:
-        drones[id] = Drone('iris', starting_poses[id], id)
-    for id in args.plane:
-        drones[id] = Drone('plane', starting_poses[id], id)
-    for id in args.typhoon:
-        drones[id] = Drone('typhoon_h480', starting_poses[id], id)
+    # for id in args.iris:
+    drones[id] = Drone('iris', starting_poses[id], id)
+    # for id in args.plane:
+    #     drones[id] = Drone('plane', starting_poses[id], id)
+    # for id in args.typhoon:
+    #     drones[id] = Drone('typhoon_h480', starting_poses[id], id)
     run_drones(drones)
 
 if __name__ == '__main__':
