@@ -22,7 +22,7 @@
 
   <include if="$(eval arg('sitl_world') == 'yosemite')" file="$(find yosemite_valley)/launch/drone_yosemite.launch">
     <arg name="gui" value="$(arg gui)"/>
-    <!-- pass_all_args="true" -->
+    <!-- <pass_all_args="true"/> -->
   </include>
 
   <include if="$(eval arg('sitl_world') == 'mcmillan')" file="$(find mcmillan_airfield)/launch/drone_mcmillan.launch">
@@ -35,9 +35,9 @@
     <!-- pass_all_args="true" -->
   </include>
 
-  <!-- <group if="$(arg dry_run)"> -->
+  <group if="$(arg dry_run)">
     <node name="qgc" pkg="qgroundcontrol" type="qgroundcontrol-start.sh" respawn="false" output="screen" required="true"/>
-  <!-- </group> -->
+  </group>
   <node name="drone" pkg="sitl_launcher" type="launch_drone" args="$(arg drone_args)" output="screen"/>
 
   <node name ="link1_broadcaster" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 local_origin_ned fcu 10" />

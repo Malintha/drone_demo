@@ -25,7 +25,6 @@ from rospy import ServiceProxy
 from rospy import myargv as rospy_myargv
 from rospy import wait_for_service
 
-
 def spawn_model(model_name, model_xml,
     pose, ros_master_uri=None, robot_namespace=None, debug=True,
     service_name='/gazebo/spawn_sdf_model',
@@ -312,9 +311,9 @@ def main():
     #     drones = ds.drones
         # print("DRONES is", drones)
     id = '0'
-
     # for id in args.iris:
     drones[id] = Drone('iris', starting_poses[id], id)
+    # drones[id].spawn()
     # for id in args.plane:
     #     drones[id] = Drone('plane', starting_poses[id], id)
     # for id in args.typhoon:
